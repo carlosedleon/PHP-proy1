@@ -17,14 +17,20 @@ require'class/sessions.php';
 //objeto de la clase users
 $objUser = new Users();
 
+
 //llamamos la funcion que nos conecta a la base de datos
 //$objConn->get_connected(); config.php
 //function que realiza la verificación de usuarios e inicio de sesion
-$objUser->login_in();
+$objUser->register_in();
 
-if(isset($_POST['register'])){
-	header('Location: register.php');
+if(isset($_POST['regBack'])){
+	/*$objses->init();
 	$objUser->destroy();
+	header('Location: /index.php');*/	
+	header('Location: user/log_out.php');
 }
+
+
+
 
 ?>
