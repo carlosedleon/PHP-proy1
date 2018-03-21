@@ -1,6 +1,23 @@
 <?php
 error_reporting(E_ALL ^ E_DEPRECATED);
 
+function consultaUsuarios($user, $pass)
+{
+	
+    $filename = "./usuarios/usuarios.txt";
+    $handle2 = file($filename);
+    print $user.$pass;
+    while(list($var, $val) = each($handle2)){ // var =0, val = test.txt|68
+        //print "$var: $val <br/>"; // test.txt|68
+        $val= explode('|', trim($val));
+	    if ($val[0]==$user && $val[1] == $pass) {
+	    	return true;
+	    }
+    }
+    //closedir($handle2);
+    return false;
+}
+
 class Users{
 	
 	public $objDb;
@@ -26,6 +43,7 @@ class Users{
 		//$this->objSe->set('user', 'Carlos');
 		
 		$this->objSe->set('user', $_POST["usern"]);
+		//print $_POST['usern'];
 		$user = isset($_SESSION['user']) ? $_SESSION['user'] : null ;
 		//$_SESSION['user']
 		//if($this->rows > 0){
@@ -36,12 +54,16 @@ class Users{
 				//$this->objSe->set('user', $row["loginUsers"]);
 				//$this->objSe->set('iduser', $row["idUsers"]);
 				//$this->objSe->set('idprofile', $row["idprofile"]);
-				if(file_exists("./user/".$user)){//file_exists($folder)
-					header('Location: user/index.php');
-					print "Existe";
-				}else{
+				if(consultaUsuarios($_POST["usern"], $_POST["passwd"])){
+					if (file_exists("./user/".$user)) {
+						header('Location: user/index.php');
+						//print "Existe";
+					}else{
+						print "Lo sentimos pero no existe el folder";
+					}
 					
-					//header('Location: user/index.php');
+				}else{					
+					header('Location: index.php');
 				}
 				//$this->useropc = $row["nameProfi"];
 				//header('Location: user/index.php');
@@ -110,6 +132,7 @@ class Users{
 					//header('Location: index.php');
 				}else{
 					$userData = $user."|".$password."\r\n";
+
 					$usersFile = fopen('usuarios/usuarios.txt', "a");
 					fwrite($usersFile, $userData);
 					fclose($usersFile);
