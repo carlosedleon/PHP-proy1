@@ -1,3 +1,0 @@
-test.txt|autor|20-03-2018|15.33 KB|usuario|descripcion|clasificacion
-Tareilla Web.txt|autor2|20-04-2018|15.33 KB|usuario|descripcion|clasificacion
-nuevo.ppt|autor3|20-05-2018|15.33 KB|usuario|descripcion|clasificacion
